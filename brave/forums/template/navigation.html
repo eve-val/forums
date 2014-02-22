@@ -13,51 +13,46 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
+                <li><a href="https://auth.of-sound-mind.com/">Auth</a></li>
                 % if not web.user:
                 <li><a href="/p/">Public Forum</a></li>
                 % else:
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Official <i class="fa fa-caret-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/ann/">Announcements</a></li>
-                        <li class="divider"></li>
-                        <li><a href="/council/">BRAVE Council</a></li>
-                        <li><a href="/it/">Information Technology</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">CCP — EVE Online <i class="fa fa-fa-external-link"></i></li>
-                        <li><a href="http://community.eveonline.com/news/news-channels/" target="_blank">News</a></li>
-                        <li><a href="http://community.eveonline.com/news/dev-blogs/" target="_blank">Developer Blogs</a></li>
-                        <li><a href="http://community.eveonline.com/news/patch-notes/" target="_blank">Patch Notes</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <i class="fa fa-caret-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-header">General</li>
-                        <li><a href="/p/">Public</a></li>
-                        <li><a href="/a/">Alliance</a></li>
-                        <li><a href="/c/">Corporate</a></li>
-                        <li class="divider"></li>
-                        <li class="dropdown-header">Other</li>
-                        <li><a href="/b/">Random</a></li>
-                        <li><a href="/n/">News &amp; Media</a></li>
-                        <li><a href="/g/">Geekery</a></li>
-                        <li><a href="/z/">Meta</a></li>
+                        <li><a href="/ops/">OP announcements</a></li>
+                        <li><a href="/pol/">Policies</a></li>
+                        <li><a href="/doc/">Active Doctrines</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Topic <i class="fa fa-caret-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-header">BRAVE Dojo</li>
-                        <li><a href="/dg/">Guides</a></li>
-                        <li><a href="/ds/">Ship Fitting</a></li>
-                        <li class="divider"></li>
                         <li class="dropdown-header">General</li>
-                        <li><a href="/pvp/">Player-vs-Player</a></li>
-                        <li><a href="/pve/">Player-vs-EVE</a></li>
-                        <li><a href="/m/">Mining</a></li>
-                        <li><a href="/i/">Industry &amp; Trade</a></li>
-                        <li><a href="/d/">DUST 514</a></li>
+                        <li><a href="/gd/">General discussion</a></li>
+                        <li><a href="/int/">Intel, Politics, and News</a></li>
+                        <li><a href="/ser/">Services</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Help</li>
+                        <li><a href="/new/">Newbie Questions</a></li>
+                        <li><a href="/gi/">Guides and Instructions</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">PVP</li>
+                        <li><a href="/fd/">Fitting Discussions</a></li>
+                        <li><a href="/dp/">Doctrine Proposals</a></li>
+                        <li><a href="/aar/">After Action Reports</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Industry and Trade</li>
+                        <li><a href="/ind/">Industry and Trade Discussion</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">PVE</li>
+                        <li><a href="/pve/">PvE discussion</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Non-EVE</li>
+                        <li><a href="/ned/">Non-EVE Discussions</a></li>
+                        <li><a href="/dust/">DUST 514 Discussions</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/adocs/">Archive</a></li>
                     </ul>
                 </li>
                 % endif
