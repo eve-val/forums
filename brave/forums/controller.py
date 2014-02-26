@@ -46,7 +46,7 @@ class RootController(Controller, StartupMixIn, AuthenticationMixIn):
                 categories = Category.objects.only('title', 'members'),
                 announcements = Forum.get('ann').first(),
                 activity = Thread.objects.get_active(allowed, user.id, 30),
-                latest = Thread.objects.get_active(allowed).order_by('-id'),
+                latest = Thread.objects.get_active(allowed).order_by('-modified'),
                 voted = Thread.objects.get_active(allowed, days=7, stat__votes__gt=0).order_by('-stat__votes')
             )
     

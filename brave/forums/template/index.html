@@ -16,9 +16,8 @@
 <%forum:threads results="${announcements.threads}" limit="3" />
 % endif
 
-<h4>Your Active Discussions</h4>
-<%forum:threads results="${activity}" limit="5" />
-
+<h4>Latest Discussions</h4>
+<%forum:threads results="${latest}" limit="5" />
 
 
 % for category in categories:
@@ -27,8 +26,8 @@
 % endfor
 
 
-<h4>Latest Discussions</h4>
-<%forum:threads results="${latest}" limit="5" />
+<h4>Your Active Discussions</h4>
+<%forum:threads results="${activity}" limit="5" />
 
 <h4>Top Voted Discussions <small>active in the last seven days.</small></h4>
 <%forum:threads results="${voted}" limit="5" />
