@@ -112,9 +112,18 @@
 </ul>
 % endif
 
-<%def name="threads(forum=None, results=None, page=1, limit=1500)">
+<%def name="threads(forum=None, results=None, page=1, limit=20)">
+<% page = int(page); limit = int(limit) %>
+% if forum:
+% if page > 1:
+<a href="/${forum.short}?page=${page - 1}">Previous Page</a>
+% endif
+
+% if results.skip((page) * limit).limit(limit).count():
+<a href="/${forum.short}?page=${page + 1}">Next Page</a>
+% endif
+% endif
 <ul class="list-group media-list clearfix">
-    <% page = int(page); limit = int(limit) %>
     % if not results.skip((page-1) * limit).limit(limit).count():
     <li class="list-group-item">
         <h4>No threads found.</h4>
