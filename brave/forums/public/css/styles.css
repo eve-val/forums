@@ -130,6 +130,10 @@ ul.nav-pills i.fa {
     margin-top: 0;
 }
 
+.unread {
+    background-color: rgba(66, 139, 202, 0.15);
+}
+
 .comment {
     position: relative;
 }
@@ -150,6 +154,29 @@ ul.nav-pills i.fa {
     width: 4px;
     background-color: #f0f0f0;
     z-index: 1;
+}
+
+.spoiler-container {
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 2px;
+}
+
+.spoiler-container .target {
+    display: inline-block;
+}
+
+.spoiler-container .target:hover, .spoiler-container .target:focus {
+    text-decoration: none;
+}
+
+.spoiler-container .spoilers {
+    display: none;
+    border-top: 1px solid;
+}
+
+.spoiler-container.unhidden .spoilers {
+    display: block;
 }
 
 /* START - Media Queries for .liner classes */
