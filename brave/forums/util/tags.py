@@ -21,13 +21,11 @@ class SemanticTagParser(object):
             'Alliance'  : self.format_evewho,
             'DebugTag' : self.format_logging
         }
-        self.block_available_tags = {
-            'Spoilers' : self.format_spoilers,
-        }
         for tag, parser in self.standalone_available_tags.iteritems():
             self.parser.add_formatter(tag, parser, standalone = True)
-        for tag, parser in self.block_available_tags.iteritems():
-            self.parser.add_formatter(tag, parser, standalone = False)
+        self.parser.add_formatter('Spoiler', self.format_spoilers,
+                                  standalone = False,
+                                  strip = True)
 
     def format(self, text):
         try:
@@ -56,6 +54,8 @@ class SemanticTagParser(object):
         return "<pre>tag name=%s\nvalue=%s\noptions=%s\nparent=%s\ncontext=%s</pre>" % ( tag_name, value, options, parent, context )
 
     def format_spoilers(self, tag_name, value, options, parent, context):
+        if not tag_name in options:
+            options[tag_name] = "Spoilers..."
         return ("<div class='spoiler-container'>"
                     "<a href='#' class='target fa fa-plus-square fa-fw fa-lg'></a>"
                     "<span class='description'>%s</span>"
