@@ -37,6 +37,7 @@ class Comment(EmbeddedDocument):
     creator = ReferenceField('Character')
     
     created = property(lambda self: self.id.generation_time)
+    created = DateTimeField(db_field='dc', default=datetime.utcnow)
     modified = DateTimeField(db_field='dm')
     
     upload = None  # TODO: some day we'll allow file uploads
