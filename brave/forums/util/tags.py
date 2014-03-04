@@ -26,6 +26,8 @@ class SemanticTagParser(object):
             self.parser.add_formatter(tag, parser, standalone=True)
         
         self.parser.add_formatter('Spoiler', self.format_spoilers, standalone=False, strip=True)
+        self.parser.add_formatter('h', self.format_heading, standalone=False, strip=True)
+        self.parser.add_formatter('img', self.format_image, standalone=False, strip=True)
     
     def format(self, text):
         try:
@@ -68,5 +70,12 @@ class SemanticTagParser(object):
         return unicode(H.div ( class_ = 'spoiler-container' ) [
                 H.a ( href = '#', class_ = 'target fa fa-plus-square fa-fw fa-lg' ),
                 H.span ( class_ = 'description' ) [ options[tag_name] ],
-                H.div ( class_ = 'spoilers' ) [ value ]
+                H.div ( class_ = 'spoilers' ) [ H.Text(value, escape=False) ]
             ])
+    
+    def format_heading(self, tag_name, value, options, parent, context):
+        return unicode(H.h4 [ H.Text(value, escape=False) ])
+    
+    def format_image(self, tag_name, value, options, parent, context):
+        return value.replace('">', '" target="_blank"><img src="').replace('</a>', '"></a>')
+        return unicode(H.img ( src = value ))
