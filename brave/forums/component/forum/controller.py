@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from web.auth import user
-from web.core import Controller, HTTPMethod, url, request
+from web.core import Controller, HTTPMethod, request
 from web.core.http import HTTPNotFound, HTTPForbidden
 
 from brave.forums.component.forum.model import Forum
@@ -24,7 +24,9 @@ class ForumIndex(HTTPMethod):
         data = dict(page=int(page), forum=self.forum)
         
         if request.is_xhr or request.format == 'html':
-            return only('brave.forums.template.forum', 'threads',
+            return only(
+                    'brave.forums.template.forum',
+                    'threads',
                     results = self.forum.threads.filter(flag__sticky=False),
                     limit = 5,
                     **data

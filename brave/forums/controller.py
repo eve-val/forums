@@ -2,11 +2,8 @@
 
 from __future__ import unicode_literals
 
-import sys
-import bbcode
-
 from web.auth import user, anonymous, authenticated
-from web.core import Controller, session
+from web.core import Controller
 
 from brave.forums.auth.controller import AuthenticationMixIn
 from brave.forums.component.category.model import Category
@@ -15,7 +12,6 @@ from brave.forums.component.forum.model import Forum
 from brave.forums.component.thread.model import Thread
 
 from brave.forums.util import StartupMixIn, resume, only, require, debugging
-from brave.forums.util.live import Channel
 from brave.forums.util.tags import SemanticTagParser
 
 log = __import__('logging').getLogger(__name__)
@@ -62,7 +58,7 @@ class RootController(Controller, StartupMixIn, AuthenticationMixIn):
         if content.strip() == '':
             return only('brave.forums.template.thread', 'no_preview')
         else:
-            parser = SemanticTagParser();
+            parser = SemanticTagParser()
             return parser.format(content)
     
     @require(authenticated)
@@ -79,4 +75,4 @@ class RootController(Controller, StartupMixIn, AuthenticationMixIn):
     @require(debugging)
     def die(self):
         """Simply explode.  Useful to get the interactive debugger up."""
-        1/0
+        1 / 0

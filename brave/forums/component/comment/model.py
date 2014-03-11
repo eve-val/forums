@@ -2,9 +2,7 @@
 
 from __future__ import unicode_literals
 
-from datetime import datetime
-
-from mongoengine import EmbeddedDocument, ObjectIdField, StringField, DateTimeField, ReferenceField, IntField, EmbeddedDocumentField, ListField, BooleanField
+from mongoengine import EmbeddedDocument, ObjectIdField, StringField, DateTimeField, ReferenceField, IntField, EmbeddedDocumentField, ListField
 
 
 log = __import__('logging').getLogger(__name__)

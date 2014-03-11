@@ -35,9 +35,9 @@ class SemanticTagParser(object):
         except Exception as e:
             log.debug("bbcode fail", exc_info=True)
             
-            return unicode(H.div ( strip = True ) [
+            return unicode(H.div (strip = True) [
                     text,
-                    H.div ( class_ = 'error-message' ) [ "There was an error processing this bbcode: ", unicode(e) ]
+                    H.div (class_ = 'error-message') ["There was an error processing this bbcode: ", unicode(e)]
                 ])
     
     dotlan_template = '<a href="http://evemaps.dotlan.net/{0}/{1}" target="dotlan">{2}</a>'
@@ -67,15 +67,15 @@ class SemanticTagParser(object):
         if tag_name not in options:
             options[tag_name] = "Spoilers..."
         
-        return unicode(H.div ( class_ = 'spoiler-container' ) [
-                H.a ( href = '#', class_ = 'target fa fa-plus-square fa-fw fa-lg' ),
-                H.span ( class_ = 'description' ) [ options[tag_name] ],
-                H.div ( class_ = 'spoilers' ) [ H.Text(value, escape=False) ]
+        return unicode(H.div (class_ = 'spoiler-container') [
+                H.a (href = '#', class_ = 'target fa fa-plus-square fa-fw fa-lg'),
+                H.span (class_ = 'description') [options[tag_name]],
+                H.div (class_ = 'spoilers') [H.Text(value, escape=False)]
             ])
     
     def format_heading(self, tag_name, value, options, parent, context):
-        return unicode(H.h4 [ H.Text(value, escape=False) ])
+        return unicode(H.h4 [H.Text(value, escape=False)])
     
     def format_image(self, tag_name, value, options, parent, context):
         return value.replace('">', '" target="_blank"><img src="').replace('</a>', '"></a>')
-        return unicode(H.img ( src = value ))
+        return unicode(H.img (src = value))

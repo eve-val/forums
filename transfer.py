@@ -3,18 +3,15 @@
 from __future__ import unicode_literals, print_function
 
 import MySQLdb
-import re
-import HTMLParser
 
 from bson import ObjectId
 from datetime import datetime
-from itertools import groupby
 
 from brave.forums.component.forum.model import Forum
 from brave.forums.component.thread.model import Thread
 from brave.forums.component.comment.model import Comment
 from brave.forums.auth.model import Character, Entity
-from brave.core.util.eve import APICall, populate_calls
+from brave.core.util.eve import APICall
 
 from marrow.util.bunch import Bunch
 

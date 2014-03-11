@@ -59,10 +59,12 @@ class Forum(Document):
         query = cls.objects(short__in=short) if short else cls.objects
         
         u = user._current_obj()
-        if u and u.admin: return query
+        if u and u.admin:
+            return query
         
         components = [Q(read=None)]
-        if not u or not u.tags: return query.filter(*components)
+        if not u or not u.tags:
+            return query.filter(*components)
         
         components.append(Q(read__in=u.tags))
         components.append(Q(write__in=u.tags))

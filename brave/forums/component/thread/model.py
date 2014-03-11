@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 from datetime import datetime, timedelta
 
 from bson import ObjectId
-from mongoengine.queryset import queryset_manager
 from mongoengine.queryset.field_list import QueryFieldList
 from mongoengine import QuerySet, Document, EmbeddedDocument, ObjectIdField, StringField, DateTimeField, ReferenceField, EmbeddedDocumentField, ListField, BooleanField
 
@@ -148,7 +147,8 @@ class Thread(Document):
         
         if not hasattr(self, '_oldest') or not cache:
             rec = Thread.objects(id=self.id).all_fields().only('comments').fields(slice__comments=[0, 1]).first()
-            if not rec: return None  # we don't cache empty sets to force re-get
+            if not rec:
+                return None  # we don't cache empty sets to force re-get
             self._oldest = rec.comments[0]
         
         return self._oldest
@@ -161,7 +161,8 @@ class Thread(Document):
         
         if not hasattr(self, '_latest') or not cache:
             rec = Thread.objects(id=self.id).all_fields().only('comments').fields(slice__comments=-1).first()
-            if not rec: return None  # we don't cache empty sets to force re-get
+            if not rec:
+                return None  # we don't cache empty sets to force re-get
             self._latest = rec.comments[0]
         
         return self._latest

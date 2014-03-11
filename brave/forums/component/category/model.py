@@ -16,7 +16,7 @@ Category(id=20, title="Other", members=['b', 'n', 'g', 'z']).save()
 
 from __future__ import unicode_literals
 
-from mongoengine import Document, ObjectIdField, StringField, ReferenceField, IntField, ListField
+from mongoengine import Document, StringField, ReferenceField, IntField, ListField
 
 
 log = __import__('logging').getLogger(__name__)

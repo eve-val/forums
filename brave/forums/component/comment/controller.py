@@ -3,16 +3,12 @@
 from __future__ import unicode_literals
 
 from web.auth import user
-from web.core import Controller, HTTPMethod, url, request
+from web.core import Controller, HTTPMethod, url
 from web.core.http import HTTPNotFound
 from bson import ObjectId
 from datetime import datetime
 
-from brave.forums.auth.model import Character
-from brave.forums.component.thread.model import Thread
-from brave.forums.component.comment.model import Comment
-from brave.forums.util.live import Channel
-from brave.forums.util import resume, only
+from brave.forums.util import only
 
 
 log = __import__('logging').getLogger(__name__)
@@ -30,7 +26,9 @@ class CommentIndex(HTTPMethod):
             user.mark_thread_read(self.thread, self.comment.modified)
         
         if self.format == 'html':
-            return only('brave.forums.template.thread', 'render_push',
+            return only(
+                    'brave.forums.template.thread',
+                    'render_push',
                     page = 1,
                     forum = self.thread.forum,
                     thread = self.thread,
@@ -48,13 +46,12 @@ class CommentIndex(HTTPMethod):
     def post(self, message):
         """Update the comment."""
         
-        if not (user and (user.admin or self.thread.forum.moderate in user.tags or user._current_obj() == self.comment.creator)):
+        if not (user and (user.admin or self.thread.forum.moderate in user.tags or
+                          user._current_obj() == self.comment.creator)):
             return 'json:', dict(success = False, message = "Not allowed.")
         
-        enabled = True
         success = self.thread.update_comment(self.comment.id, set__message = message,
-                 set__modified = datetime.utcnow()
-             )
+                 set__modified = datetime.utcnow())
         if not success:
             return 'json:', dict(success = False, message = "Thread not found.")
         

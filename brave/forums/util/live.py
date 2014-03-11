@@ -7,10 +7,8 @@ import json
 
 from hashlib import sha256
 from web.auth import user
-from web.core import config
+from web.core import config, session
 from marrow.util.futures import ScalingPoolExecutor
-
-from brave.api.client import API
 
 
 log = __import__('logging').getLogger(__name__)

@@ -2,18 +2,13 @@
 
 from __future__ import unicode_literals
 
-from bson import ObjectId
-from datetime import datetime
-
 from web.auth import user
-from web.core import Controller, HTTPMethod, url, request
+from web.core import Controller, HTTPMethod
 from web.core.http import HTTPNotFound
 
-from brave.forums.auth.model import Character
 from brave.forums.component.thread.model import Thread
 from brave.forums.component.comment.controller import CommentController
-from brave.forums.component.comment.model import Comment
-from brave.forums.util import resume, only
+from brave.forums.util import resume
 
 
 log = __import__('logging').getLogger(__name__)
@@ -49,7 +44,6 @@ class ThreadIndex(HTTPMethod):
         self.thread.add_comment(user._current_obj(), message)
         
         return 'json:', dict(success=True)
-
 
 
 class ThreadController(Controller):
