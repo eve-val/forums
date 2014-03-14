@@ -48,7 +48,7 @@ class CommentIndex(HTTPMethod):
     def post(self, message):
         """Update the comment."""
         
-        if not (user and (user.admin or forum.moderate in user.tags or user == self.comment.creator)):
+        if not (user and (user.admin or self.thread.forum.moderate in user.tags or user._current_obj() == self.comment.creator)):
             return 'json:', dict(success = False, message = "Not allowed.")
         
         enabled = True
@@ -66,8 +66,9 @@ class CommentIndex(HTTPMethod):
         
         forum = self.thread.forum
         
-        # TODO: Security
-        # if 'admin' not in user.tags or (forum.moderate and forum.moderate not in user.tags)
+        if not (user and (user.admin or forum.moderate in user.tags
+                          or user._current_obj() == self.comment.creator)):
+            return 'json:', dict(success = False, message = "Not allowed.")
         
         if self.comment.id == self.thread.oldest().id:
             forum.channel.send('gone', str(self.thread.id))
