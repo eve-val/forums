@@ -85,16 +85,21 @@ class SemanticTagParser(object):
     
     def format_fit(self, tag_name, value, options, parent, contex):
         title = None
+        stats_str = None
         url = None
         
         if value:
             title = value.split("\n")[0]
-            url = Fit.get_fit(value).fit_url()
+            fit = Fit.get_fit(value)
+            url = fit.fit_url()
+            stats_str = fit.stats_string()
+            print stats_str
         
+        description_contents = (title,)
+        if stats_str:
+            description_contents += (" - ", stats_str)
         if url:
-            description_contents = (title, " - ", H.a ( href = url ) [ "Osmium" ])
-        else:
-            description_contents = title
+            description_contents += (" - ", H.a ( href = url ) [ "Osmium" ])
         
         value_contents = []
         for v in value.split('\n'):
