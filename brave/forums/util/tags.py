@@ -29,7 +29,8 @@ class SemanticTagParser(object):
         self.parser.add_formatter('Spoiler', self.format_spoilers, standalone=False, strip=True)
         self.parser.add_formatter('h', self.format_heading, standalone=False, strip=True)
         self.parser.add_formatter('img', self.format_image, standalone=False, strip=True)
-        self.parser.add_formatter('fit', self.format_fit, standalone=False, strip=True, transform_newlines=False)
+        self.parser.add_formatter('fit', self.format_fit, standalone=False, strip=True,
+                  transform_newlines=False, escape_html=False)
     
     def format(self, text):
         try:
@@ -100,10 +101,13 @@ class SemanticTagParser(object):
         if url:
             description_contents += (" - ", H.a ( href = url ) [ "Osmium" ])
         
-        value = value.replace('\n', "<br />")
+        value_contents = []
+        for v in value.split('\n'):
+            value_contents.extend([v, H.br()])
+        value_contents.pop() # remove extra br
         
         return unicode(H.div ( class_ = 'spoiler-container' ) [
                 H.a ( href = '#', class_ = 'target fa fa-plus-square fa-fw fa-lg' ),
                 H.span ( class_ = 'description' ) [ description_contents ],
-                H.div ( class_ = 'spoilers' ) [ H.Text(value, escape=False) ]
+                H.div ( class_ = 'spoilers' ) [ value_contents ]
             ])

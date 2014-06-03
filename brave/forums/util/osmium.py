@@ -18,7 +18,7 @@ class Fit(Document):
                 ],
         )
     
-    eft = StringField(db_field='f', primary_key=True)
+    eft = StringField(db_field='f', primary_key=True, unique=True)
     clf = StringField(db_field='c')
 
     dps = DecimalField(db_field='d')
@@ -28,11 +28,18 @@ class Fit(Document):
     
     @staticmethod
     def get_fit(eft):
+        # We do this little dance to guarantee we make only one request to osmium for an given fit.
         query = Fit.objects(eft=eft)
         if query:
             return query[0]
-        
+
         f = Fit(eft=eft)
+        try:
+            f.save()
+        except OperationError: # collision on unique field
+            return Fit.objects(eft=eft).first()
+
+        # Okay, we were the first to insert the fit into the DB. Go ahead and populate the CLF.
         
         try:
             f.fetch_osmium()
@@ -55,7 +62,6 @@ class Fit(Document):
                     )
             if resp.status_code == 200:
                 json = resp.json()
-                print resp.text
                 self.dps = json['ship']['damage']['total']['dps']
                 self.rep = max(json['ship']['outgoing'][tank][0] for tank in ("shield", "armor"))
                 self.ehp = json['ship']['ehpAndResonances']['ehp']['avg']
