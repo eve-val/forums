@@ -85,10 +85,13 @@ class Fit(Document):
         return " - ".join(stats)
 
 def format_number(number):
-    sizes = ['', 'k', 'M', 'G', 'T']
-    index = 0
-    number = float(number)
-    while number > 1000.0:
-        number /= 1000.0
-        index += 1
-    return "%3d%s" % (number, sizes[index])
+    try:
+        sizes = ['', 'k', 'M', 'G', 'T']
+        index = 0
+        number = float(number)
+        while number > 1000.0:
+            number /= 1000.0
+            index += 1
+        return "%3d%s" % (number, sizes[index])
+    except Exception:
+        return "???"
