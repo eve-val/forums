@@ -169,7 +169,7 @@ BASE = "/{0}/{1}".format(forum.short, thread.id)
             $('body').on('click', '.comment-composer .submit', function(e){
                 var self = $(this),
                     editor = self.parents('.comment-composer'),
-                    isEdit = editor.hasClass('.comment-composer-edit');
+                    isEdit = editor.hasClass('comment-composer-edit');
                 self.addClass('disabled').prop('disabled', true);
                 
                 var postdata = {message: editor.find('.message').val()};
