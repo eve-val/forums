@@ -1,0 +1,28 @@
+## encoding: utf-8
+
+<%inherit file="brave.forums.template.master"/>
+<%namespace name="f" file="brave.forums.template.filter"/>
+
+<%block name="title">Search results</%block>
+
+<%block name="header">
+    ${parent.header()}
+</%block>
+
+<%def name="render_comment(t, c)">
+<a href="/${t.forum.short|h}/${str(t.id)}#${str(c.id)}">
+    ${c.creator.character.name|h} in thread ${t.title|h}
+</a>
+${c.message | n, f.bb}
+<br />
+</%def>
+
+<%f:page title="Search result" minor="..." />
+
+<ul>
+% for result in hits:
+<li>
+${render_comment(result['thread'], result['comment'])}
+</li>
+% endfor
+</ul>

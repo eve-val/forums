@@ -60,10 +60,12 @@ class StartupMixIn(object):
 def resume(Handler, element, remaining, *args, **kw):
     request.path_info_pop()
     
-    if '.' in element:
+    if element and '.' in element:
         element, _, request.format = element.rpartition('.')
     else:
         request.format = None
+
+    print Handler
     
     return Handler(element, *args, **kw), remaining
 
