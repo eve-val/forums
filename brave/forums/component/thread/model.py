@@ -7,10 +7,11 @@ from datetime import datetime, timedelta
 from bson import ObjectId
 from mongoengine.queryset import queryset_manager
 from mongoengine.queryset.field_list import QueryFieldList
-from mongoengine import QuerySet, Document, EmbeddedDocument, ObjectIdField, StringField, DateTimeField, ReferenceField, EmbeddedDocumentField, ListField, BooleanField
+from mongoengine import QuerySet, Document, EmbeddedDocument, ObjectIdField, StringField, DateTimeField, ReferenceField, EmbeddedDocumentField, ListField, BooleanField, ValidationError
 
 from brave.forums.model import Statistics
 from brave.forums.component.comment.model import Comment
+from brave.forums.component.search.lib import index_comment_async, unindex_comment_async
 from brave.forums.util.live import Channel
 
 
@@ -80,6 +81,13 @@ class Thread(Document):
     
     def __repr__(self):
         return 'Thread({0.id} in {0.forum.id}, "{0.title}")'.format(self)
+
+    @staticmethod
+    def get_thread(id):
+        try:
+            return Thread.objects.get(id=id)
+        except ValidationError:
+            raise Thread.DoesNotExist
     
     @property
     def channel(self):
@@ -104,6 +112,8 @@ class Thread(Document):
         log.info("{0.character.name} added comment '{1}' to {2.forum.short}/{2.id}".format(user, message, self))
 
         self.channel.send('comment', str(comment.id))
+
+        index_comment_async(self, comment)
         
         return comment
     
@@ -138,7 +148,17 @@ class Thread(Document):
         if raw:
             update.update(raw)
         
-        return Thread.objects(comments__id=id).update_one(**update)
+        success = Thread.objects(comments__id=id).update_one(**update)
+        if not success:
+            return success
+
+        comment = self.get_comment(id)
+        if comment:
+            index_comment_async(self, comment)
+        else:
+            unindex_comment_async(id)
+
+        return success
     
     def update_title(self, title):
         return Thread.objects(id=self.id).update_one(set__title=title)
