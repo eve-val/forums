@@ -13,6 +13,7 @@ from brave.forums.component.category.controller import CategoryController
 from brave.forums.component.category.model import Category
 from brave.forums.component.forum.controller import ForumController
 from brave.forums.component.forum.model import Forum
+from brave.forums.component.search.controller import SearchController
 from brave.forums.component.thread.model import Thread
 
 from brave.forums.util import StartupMixIn, resume, only, require, debugging
@@ -32,6 +33,8 @@ class RootController(Controller, StartupMixIn, AuthenticationMixIn):
         """
         if first == "category":
             return resume(CategoryController, args[0] if args else None, args[1:])
+        elif first == "search":
+            return resume(SearchController, args[0] if args else None, args[1:])
         else:
             return resume(ForumController, first, args)
     
