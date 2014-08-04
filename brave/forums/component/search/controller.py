@@ -16,15 +16,16 @@ class SearchController(Controller):
     def __init__(self, *args):
         pass
 
-    def index(self, q=None):
-        search_forums = [f.short for f in Forum.objects() if f.user_can_read(user)]
-        results = search(q, search_forums)
+    def index(self, q=''):
         result_data = []
-        for result in results:
-            thread = Thread.objects(id=result['thread_id']).first()
-            comment = thread.get_comment(ObjectId(result['comment_id']))
-            result_data.append(dict(
-                thread=thread,
-                comment=comment,
-            ))
-        return 'brave.forums.template.search', dict(hits=result_data)
+        if q:
+            search_forums = [f.short for f in Forum.objects() if f.user_can_read(user)]
+            results = search(q, search_forums)
+            for result in results:
+                thread = Thread.objects(id=result['thread_id']).first()
+                comment = thread.get_comment(ObjectId(result['comment_id']))
+                result_data.append(dict(
+                    thread=thread,
+                    comment=comment,
+                ))
+        return 'brave.forums.template.search', dict(q=q, hits=result_data)
